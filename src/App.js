@@ -27,13 +27,18 @@ export default class App extends Component {
       filtredCountries: allCountries,
     });
   }
+  handleChangeFilter = (newText) => {
+    this.setState({
+      filter: newText,
+    });
+  };
   render() {
-    const { allCountries } = this.state;
+    const { allCountries, filter } = this.state;
     console.log(allCountries);
     return (
       <div className="container">
         <h1>React Countries</h1>
-        <Header />
+        <Header filter={filter} onChangeFilter={this.handleChangeFilter} />
         <Countries countries={allCountries} />
       </div>
     );
