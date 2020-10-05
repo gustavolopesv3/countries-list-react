@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Countries from './components/countries/Countries';
+import Header from './components/header/Header';
 
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
       allCountries: [],
+      filtredCountries: [],
+      filter: '',
     };
   }
   async componentDidMount() {
@@ -21,6 +24,7 @@ export default class App extends Component {
     });
     this.setState({
       allCountries: allCountries,
+      filtredCountries: allCountries,
     });
   }
   render() {
@@ -28,7 +32,8 @@ export default class App extends Component {
     console.log(allCountries);
     return (
       <div className="container">
-        Reac
+        <h1>React Countries</h1>
+        <Header />
         <Countries countries={allCountries} />
       </div>
     );
