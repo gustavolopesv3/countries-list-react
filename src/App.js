@@ -8,7 +8,7 @@ export default class App extends Component {
     this.state = {
       allCountries: [],
       filteredCountries: [],
-      filteredPopularion: 0,
+      filteredPopulation: 0,
       filter: '',
     };
   }
@@ -24,11 +24,21 @@ export default class App extends Component {
         population,
       };
     });
+    const filteredPopulation = this.calculateTotalPopulationFrom(allCountries);
     this.setState({
       allCountries: allCountries,
-      filtredCountries: Object.assign([], allCountries),
+      filteredCountries: Object.assign([], allCountries),
+      filteredPopulation,
     });
   }
+
+  calculateTotalPopulationFrom = (countries) => {
+    const totalPopulation = countries.reduce((acc, cur) => {
+      return acc + cur.population;
+    }, 0);
+    return totalPopulation;
+  };
+
   handleChangeFilter = (newText) => {
     this.setState({
       filter: newText,
@@ -37,23 +47,24 @@ export default class App extends Component {
     const filteredCountries = this.state.allCountries.filter((country) => {
       return country.filterName.includes(filterLowerCase);
     });
-    const filteredPopularion = filteredCountries.reduce((acc, cur) => {
-      return acc + cur.population;
-    }, 0);
+    const filteredPopulation = this.calculateTotalPopulationFrom(
+      filteredCountries
+    );
+
     this.setState({
       filteredCountries,
-      filteredPopularion,
+      filteredPopulation,
     });
   };
   render() {
-    const { filteredCountries, filter, filteredPopularion } = this.state;
+    const { filteredCountries, filter, filteredPopulation } = this.state;
     return (
       <div className="container">
         <h1>React Countries</h1>
         <Header
           filter={filter}
           countryCount={filteredCountries.length}
-          totalPopulation={filteredPopularion}
+          totalPopulation={filteredPopulation}
           onChangeFilter={this.handleChangeFilter}
         />
         <Countries countries={filteredCountries} />
