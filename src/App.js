@@ -40,20 +40,6 @@ export default class App extends Component {
       filteredCountries,
     });
   };
-  // handleChangeFilter(newText) {
-  //   this.setState({
-  //     filter: newText,
-  //   });
-
-  //   const filterLowerCase = newText.toLowerCase;
-
-  //   const filteredCountries = this.state.allCountries.filter((country) => {
-  //     country.filterName.includes(filterLowerCase);
-  //   });
-  //   this.setState({
-  //     filteredCountries,
-  //   });
-  // }
   render() {
     const { filteredCountries, filter } = this.state;
     return (
