@@ -8,6 +8,7 @@ export default class App extends Component {
     this.state = {
       allCountries: [],
       filteredCountries: [],
+      filteredPopularion: 0,
       filter: '',
     };
   }
@@ -36,16 +37,25 @@ export default class App extends Component {
     const filteredCountries = this.state.allCountries.filter((country) => {
       return country.filterName.includes(filterLowerCase);
     });
+    const filteredPopularion = filteredCountries.reduce((acc, cur) => {
+      return acc + cur.population;
+    }, 0);
     this.setState({
       filteredCountries,
+      filteredPopularion,
     });
   };
   render() {
-    const { filteredCountries, filter } = this.state;
+    const { filteredCountries, filter, filteredPopularion } = this.state;
     return (
       <div className="container">
         <h1>React Countries</h1>
-        <Header filter={filter} onChangeFilter={this.handleChangeFilter} />
+        <Header
+          filter={filter}
+          countryCount={filteredCountries.length}
+          totalPopulation={filteredPopularion}
+          onChangeFilter={this.handleChangeFilter}
+        />
         <Countries countries={filteredCountries} />
       </div>
     );
